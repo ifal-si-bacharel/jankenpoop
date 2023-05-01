@@ -4,4 +4,4 @@
 
 > ATENÇÃO DESENVOLVEDORES:
 > Antes de iniciar o projeto confiram se estão com o `pip` instalado e rodem o comando `pip install -r requirements.txt`
-> para instalar as dependẽncias antes de começar a desenvolver.
+> para instalar as dependências antes de começar a desenvolver.
