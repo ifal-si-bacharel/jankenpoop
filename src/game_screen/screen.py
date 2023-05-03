@@ -1,57 +1,31 @@
-import configparser
 import pygame as pg
+from src.config.window import window
+from src.game_screen.components.button import Button
+from src.game_screen.script.match import player_choice
 
-config = configparser.ConfigParser()
-config.read('config.ini')
+display = window()
+width = display.get_width()
+height = display.get_height()
 
-width = int(config['WINDOW']['Width'])
-height = int(config['WINDOW']['Height'])
-def set_fill(display):
-       display.fill((60,68,79)) 
-def screen(display):
-    set_fill(display)
-    class Button():
-
-        coordy = height/1.5-50
-
-        def __init__(self, coordx,color,name):
-
-            self.coordx = coordx
-            self.position = (self.coordx,self.coordy)
-            self.color = color
-            self.name = name
-            self.buttonArea = pg.Rect(width/self.coordx-50,self.coordy,100,100)
-
-
-        def draw(self):
-            """
-            desenha botões na tela:
-            """
-            pg.draw.rect(display,self.color,self.buttonArea)
-
-        def is_hover(self):
-            """verifica se o botão foi clicado"""
-            mousePosition = pg.mouse.get_pos()
-            if self.buttonArea.collidepoint(mousePosition):
-                 if pg.mouse.get_pressed()[0] == 1:
-                      print(self.name)
-                
-    
-    
-    button_pedra = Button(5,(255,0,0),'pedra')
-    button_papel = Button(2,(0,255,0),'papel')
-    button_tesoura = Button(1.25,(0,0,255),'tesoura')
-    
+def set_fill():
+    display.fill((60,68,79)) 
+def draw_screen():
+    set_fill()
     button_pedra.draw()
     button_papel.draw()
     button_tesoura.draw()
-
-    button_pedra.is_hover()
-    button_papel.is_hover()
-    button_tesoura.is_hover()
-
-
     
-
+def update_screen():
+    if button_pedra.is_hover():
+        player_choice(1)
+        return
+    
+    # if
+    # button_papel.is_hover()
+    # button_tesoura.is_hover()  
+    
+button_pedra = Button(5,(255,0,0),'pedra',width,height)
+button_papel = Button(2,(0,255,0),'papel',width,height)
+button_tesoura = Button(1.25,(0,0,255),'tesoura',width,height)
 
     
