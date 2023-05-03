@@ -1,8 +1,10 @@
 import pygame
 from src.config.window import window
 from src.config.game_params import setup_clock
+from src.game_screen.screen import *
 
 def update():
+  screen(gameScreen)
   return
 
 def draw_window():
@@ -21,6 +23,8 @@ def main():
   pygame.quit()
 
 if __name__ == '__main__':
-  window()
+  gameScreen = window()
+  
+    
   main()
   
