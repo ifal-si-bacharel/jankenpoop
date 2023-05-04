@@ -1,7 +1,7 @@
 import pygame
 from src.config.window import window
 from src.config.game_params import setup_clock
-from src.game_screen.screen import *
+from src.modules.game_screen.game_screen import update_screen, draw_screen
 
 def update():
   update_screen()
