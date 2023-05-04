@@ -1,11 +1,14 @@
 from random import randint
 
 options = [1, 2, 3]
-rules = [[0, -1, 1], [1, 0, -1], [-1, 1, 0]]
+rules = [
+  [0, -1, 1],
+  [1, 0, -1],
+  [-1, 1, 0]
+]
 
 def machine_choice():
     return randint(1, 3)
-
 
 def player_choice(option: str):
     player_choice_index = options.index(option)
