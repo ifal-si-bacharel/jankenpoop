@@ -1,6 +1,7 @@
 from random import randint
 
 options = [1, 2, 3]
+exit= ["pedra", "papel", "tesoura"]
 rules = [
   [0, -1, 1],
   [1, 0, -1],
@@ -16,7 +17,7 @@ def player_choice(option: str):
 
     result = rules[player_choice_index][computer_choice_index]
 
-    print(result)
+    print(f"jogador: {exit[player_choice_index]} | inimigo: {exit[computer_choice_index]}")
 
     if result == 0:
         print('empate')

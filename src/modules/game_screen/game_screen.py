@@ -14,7 +14,13 @@ def set_fill():
 def update_screen():
   if button_pedra.is_hover():
     player_choice(1)
-    return
+    
+  elif button_papel.is_hover():
+    player_choice(2)
+    
+  elif button_tesoura.is_hover():
+    player_choice(3)
+    
 
 def draw_screen():
   set_fill()
