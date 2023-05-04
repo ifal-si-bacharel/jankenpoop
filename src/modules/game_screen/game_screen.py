@@ -3,12 +3,10 @@ from src.common.components.button import Button
 from src.modules.game_screen.script.match import player_choice
 
 display = window()
-width = display.get_width()
-height = display.get_height()
 
-button_pedra = Button(5,(255,0,0),'pedra',width,height)
-button_papel = Button(2,(0,255,0),'papel',width,height)
-button_tesoura = Button(1.25,(0,0,255),'tesoura',width,height)
+button_pedra = Button(5,(255,0,0),'pedra')
+button_papel = Button(2,(0,255,0),'papel')
+button_tesoura = Button(1.25,(0,0,255),'tesoura')
 
 def set_fill():
   display.fill((60,68,79)) 

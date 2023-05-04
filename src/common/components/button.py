@@ -3,14 +3,17 @@ from src.config.window import window
 
 class Button():
   display = window()
+
+  width = display.get_width()
+  height = display.get_height()
     
-  def __init__(self, coordx, color, name, width, height):
-    self.coordy = height/1.5-50
+  def __init__(self, coordx, color, name):
+    self.coordy = self.height / 1.5-50
     self.coordx = coordx
     self.position = (self.coordx,self.coordy)
     self.color = color
     self.name = name
-    self.buttonArea = pg.Rect(width/self.coordx-50,self.coordy,100,100)
+    self.buttonArea = pg.Rect(self.width / self.coordx-50, self.coordy,100,100)
 
   def draw(self):
     """
