@@ -27,10 +27,3 @@ def draw_screen():
   button_pedra.draw()
   button_papel.draw()
   button_tesoura.draw()
-    
-    # if
-    # button_papel.is_hover()
-    # button_tesoura.is_hover()  
-    
-
-    
