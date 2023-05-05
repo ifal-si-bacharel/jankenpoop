@@ -7,8 +7,4 @@ config.read('config.ini')
 clock = pygame.time.Clock()
 
 def setup_clock():
-  """
-    Função de configura a taxa de atualização do jogo
-  """
-
   clock.tick(int(config['GAMEPARAMS']['Fps']))

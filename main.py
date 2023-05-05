@@ -1,17 +1,14 @@
 import pygame
 from src.config.window import window
 from src.config.game_params import setup_clock
+from src.modules.game_screen.game_screen import update_screen, draw_screen
 
 def update():
-  """
-    Funções para logica do jogo devem vim aqui
-  """
-  return
+  update_screen()
 
 def draw_window():
-  """
-    Funções de renderização devem vim aqui
-  """
+  draw_screen()
+
   pygame.display.update()
 
 def main():
@@ -30,6 +27,6 @@ def main():
   pygame.quit()
 
 if __name__ == '__main__':
-  window()
+  window()    
   main()
   
