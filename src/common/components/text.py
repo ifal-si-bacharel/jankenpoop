@@ -9,7 +9,7 @@ class Text():
   def __init__(self, text, color, coordx, coordy):
     pg.init()
 
-    self.font = pg.font.SysFont('Arial', 25)
+    self.font = pg.font.SysFont('Calibri', 25)
     self.coordx = coordx
     self.coordy = coordy
 

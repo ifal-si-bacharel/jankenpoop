@@ -16,13 +16,7 @@ def player_choice(option: str):
     computer_choice_index = options.index(machine_choice())
 
     result = rules[player_choice_index][computer_choice_index]
-
+    
     print(f"jogador: {exit[player_choice_index]} | inimigo: {exit[computer_choice_index]}")
 
-    if result == 0:
-        print('empate')
-    elif result == 1:
-        print('u win')
-    else:
-        print('computer win')
-    
+    return result
