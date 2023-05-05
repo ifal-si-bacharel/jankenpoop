@@ -8,9 +8,13 @@ def update():
 
 def draw_window():
   draw_screen()
+
   pygame.display.update()
 
 def main():
+  """
+    Função principal para iniciar a aplicação
+  """
   run = True
   while run:
     setup_clock()
