@@ -3,7 +3,9 @@ from src.common.components.button import Button
 from src.modules.game_screen.script.match import player_choice, machine_choice, exit
 from src.common.components.text import Text
 
+
 display = window()
+display_width = display.get_width()
 
 button_pedra = Button(5,(200,0,0),'pedra')
 button_papel = Button(2,(0,200,0),'papel')
@@ -16,23 +18,24 @@ def set_fill():
 welcome_text = Text("Bem-vindo ao jogo! Faça sua escolha.", (255, 255, 198), 4.5, 100)
 
 def choice(option):
-
-  check = player_choice(option)
-  print(check)
-  player_choice_text = Text(f'Você escolheu {exit[option-1]}', (255, 255, 255), 6,135)
-  machine_choice_text = Text(f'A maquina escolheu {exit[machine_choice()-1]}', (255, 255, 255), 6,165)
- 
   set_fill()
+  check = player_choice(option)
+  print(display_width)
+  player_choice_text = Text(check[1], (255, 255, 255), 6,135)
+  
+  machine_choice_text = Text(check[2], (255, 255, 255), 2,165)
+
+  
   player_choice_text.draw()
   machine_choice_text.draw()
-  if check == 1:
-    text = Text("Você ganhou!", (255,255,255), 2, 200)
+  if check[0] == 1:
+    text = Text("Você ganhou!", (0,255,0), 6,200)
     text.draw()
-  elif check == 0:
-    text = Text("Empate!", (255,255,255), 2, 200)
+  elif check[0] == 0:
+    text = Text("Empate!", (0,0,255), 6,200)
     text.draw()
   else:
-    text = Text("Você perdeu!", (255,255,255), 2, 200)
+    text = Text("Você perdeu!", (255,0,0), 6,200)
     text.draw()  
     
 

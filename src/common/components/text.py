@@ -13,13 +13,13 @@ class Text():
     self.coordx = coordx
     self.coordy = coordy
 
-    self.half_font_width = self.font.get_linesize() / 2  
+    self.half_font_width = self.font.get_linesize()+5  
     self.half_font_height = self.font.get_height() / 2  
     self.CENTER_CONSTANT = 25
 
     self.position = (
-      (self.screen_width / self.coordx - self.CENTER_CONSTANT) - self.half_font_width,
-      (self.coordy + self.CENTER_CONSTANT)
+      (self.screen_width / self.coordx) - self.half_font_width,
+      (self.coordy + self.CENTER_CONSTANT+self.half_font_height)
     )
     
     self.text = text

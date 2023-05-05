@@ -17,6 +17,6 @@ def player_choice(option: str):
 
     result = rules[player_choice_index][computer_choice_index]
     
-    print(f"jogador: {exit[player_choice_index]} | inimigo: {exit[computer_choice_index]}")
+    
 
-    return result
+    return [result,f"Você jogou {exit[player_choice_index]}...",f"O inimigo jogou {exit[computer_choice_index]}..."]
