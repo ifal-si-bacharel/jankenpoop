@@ -12,6 +12,9 @@ button_tesoura = Button(1.25,(0,0,200),'tesoura')
 
 welcome_text = Text("Bem-vindo ao jogo! Faça sua escolha.", (255, 255, 198), 4.5, 100)
 
+def set_fill():
+  display.fill((0,0,0))
+
 def choice(option):
   set_fill()
   check = player_choice(option)
