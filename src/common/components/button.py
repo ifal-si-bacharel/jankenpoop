@@ -27,11 +27,10 @@ class Button():
     if self.name:
       text = Text(self.name, (255, 255, 255), self.coordx, self.coordy)
       text.draw()
-
-
-  def is_hover(self): 
+      
+  def onclick(self, func, param = None): 
     """verifica se o botão foi clicado"""
     mousePosition = pg.mouse.get_pos()
     if self.buttonArea.collidepoint(mousePosition):
       if pg.mouse.get_pressed()[0] == 1:
-        return self.name
+        return func(param)

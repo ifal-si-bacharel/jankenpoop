@@ -8,7 +8,6 @@ def update():
 
 def draw_window():
   draw_screen()
-
   pygame.display.update()
 
 def main():
@@ -27,6 +26,7 @@ def main():
   pygame.quit()
 
 if __name__ == '__main__':
-  window()    
+  window()
+    
   main()
   
