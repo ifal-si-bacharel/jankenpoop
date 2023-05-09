@@ -1,9 +1,7 @@
 import pygame
 from src.config.window import window
 from src.config.game_params import setup_clock
-from src.common.screen_display import frame, tela_atual
-
-  
+from src.common.screen_display import frame
 
 def main():
   """
@@ -22,6 +20,5 @@ def main():
 
 if __name__ == '__main__':
   window()
-    
   main()
   

@@ -2,16 +2,19 @@ from src.config.window import window
 import src.modules.game_screen.game_screen as match
 import src.modules.menu_screen.menu_screen as menu
 
-print('ping')
-telas = [menu,match]
-tela_atual= telas[1]
-display = window()
-screen_width = display.get_width()
-screen_height = display.get_height()
+global current_screen 
+current_screen = 'menu'
 
-def set_fill():
-  display.fill((0,0,0))
+
+display = window()
+
+def switch_screen(screen):
+  current_screen = screen
 
 def frame():
-    tela_atual.update_screen()
-    tela_atual.draw_screen()
+  if current_screen == 'menu':
+    menu.update_screen()
+    menu.draw_screen()
+  if current_screen == 'match':
+    match.update_screen()
+    match.draw_screen()

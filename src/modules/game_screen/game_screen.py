@@ -1,4 +1,4 @@
-from src.common.screen_display import *
+from src.config.window import window
 from src.common.components.button import Button
 from src.common.components.text import Text
 from src.modules.game_screen.script.match import player_choice
@@ -9,7 +9,7 @@ button_papel = Button(2,(0,200,0),'papel')
 button_tesoura = Button(1.25,(0,0,200),'tesoura')
 
 def choice(option):
-  screen.set_fill()
+  window().set_fill()
   check = player_choice(option)
   player_choice_text = Text(check[1], (255, 255, 255), 6,135)
   
