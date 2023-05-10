@@ -2,14 +2,15 @@ from src.config.window import window
 import src.modules.game_screen.game_screen as match
 import src.modules.menu_screen.menu_screen as menu
 
-global current_screen 
+
 current_screen = 'menu'
-
-
 display = window()
 
 def switch_screen(screen):
+  print(screen)
+  global current_screen 
   current_screen = screen
+  
 
 def frame():
   if current_screen == 'menu':

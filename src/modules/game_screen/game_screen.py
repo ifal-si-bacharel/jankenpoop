@@ -3,13 +3,14 @@ from src.common.components.button import Button
 from src.common.components.text import Text
 from src.modules.game_screen.script.match import player_choice
 
+display = window()
 button_start = Button(2,(255,255,255),'start')
 button_pedra = Button(5,(200,0,0),'pedra')
 button_papel = Button(2,(0,200,0),'papel')
 button_tesoura = Button(1.25,(0,0,200),'tesoura')
 
 def choice(option):
-  window().set_fill()
+  display.fill((0,0,0))
   check = player_choice(option)
   player_choice_text = Text(check[1], (255, 255, 255), 6,135)
   
@@ -29,9 +30,9 @@ def choice(option):
 
 
 def update_screen():
-  button_pedra.onclick(choice,1)
-  button_papel.onclick(choice,2)
-  button_tesoura.onclick(choice,3)
+  button_pedra.onclick(lambda: choice(1))
+  button_papel.onclick(lambda: choice(2))
+  button_tesoura.onclick(lambda: choice(3))
     
 def draw_screen():
   button_pedra.draw()
