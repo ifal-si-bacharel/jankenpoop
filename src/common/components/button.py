@@ -3,11 +3,11 @@ from src.config.window import screen_width, screen_height, window
 from src.common.components.text import Text
 
 class Button():
-
+  
   display = window()
     
-  def __init__(self, coordx, color, name, width = 100, height = 100):
-    self.coordy = screen_height() / 1.5 - 50
+  def __init__(self, coordx,coordy, color, name, width = 100, height = 100, ):
+    self.coordy = coordy
     self.coordx = coordx
     self.color = color
     self.name = name

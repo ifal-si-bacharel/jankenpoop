@@ -11,9 +11,11 @@ def switch_screen(screen):
   global current_screen 
   current_screen = screen
   
+  
 
 def frame():
   if current_screen == 'menu':
+    display.fill((0,0,0))
     menu.update_screen()
     menu.draw_screen()
   if current_screen == 'match':
