@@ -20,14 +20,14 @@ def choice(option):
 
   check = player_choice(option)
 
-  player_choice_text = Text(check[1], (255, 255, 255), 6,135)
+  player_choice_text = Text(check[1][0], (255, 255, 255), 6,135)
   
-  machine_choice_text = Text(check[2], (255, 255, 255), 2,165)
+  machine_choice_text = Text(check[1][1], (255, 255, 255), 2,165)
 
   text = Text(check[0], (255,255,255), 6,200)
 
 
-  if check[3] == 0 or check[4] == 0:
+  if 0 in check[2]:
     player_choice_text = Text('', (255, 255, 255), 6,135)
     machine_choice_text = Text('', (255, 255, 255), 2,165)
     text = Text('', (255,255,255), 6,200)
@@ -48,7 +48,7 @@ def update_screen():
   button_tesoura.onclick(tesoura)
     
 def draw_screen():
-  display.fill((0,0,0))
+  
   text.draw()  
   player_choice_text.draw()
   machine_choice_text.draw()

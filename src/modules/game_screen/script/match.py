@@ -31,9 +31,11 @@ def player_choice(option: str):
         player_lifes -= 1
     else:
         result = "Empate!"
-
+    print(f"{current_round}|jogador: {player_lifes} X Inimigo: {enemy_lifes}")
+    round_text = current_round
     if enemy_lifes == 0 or player_lifes == 0:
         current_round = 0
+    player_text = f"Você jogou {exit[player_choice_index]}..."
+    machine_text = f"O inimigo jogou {exit[computer_choice_index]}..."
     
-    print(f"{current_round}|jogador: {player_lifes} X Inimigo: {enemy_lifes}")
-    return [result,f"Você jogou {exit[player_choice_index]}...",f"O inimigo jogou {exit[computer_choice_index]}...",player_lifes,enemy_lifes,current_round]
+    return [result,[player_text,machine_text],[player_lifes,enemy_lifes],round_text]

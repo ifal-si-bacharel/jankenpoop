@@ -19,5 +19,6 @@ def frame():
     menu.update_screen()
     menu.draw_screen()
   if current_screen == 'match':
+    display.fill((0,0,0))
     match.update_screen()
     match.draw_screen()
