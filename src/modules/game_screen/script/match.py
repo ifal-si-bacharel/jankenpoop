@@ -24,10 +24,14 @@ def player_choice(option: str):
     computer_choice_index = options.index(machine_choice())
     result = rules[player_choice_index][computer_choice_index]
     if result == 1:
+        result = "Você ganhou!"
         enemy_lifes -=1
     elif result == -1:
+        result = "Você perdeu!"
         player_lifes -= 1
-    
+    else:
+        result = "Empate!"
+
     if enemy_lifes == 0 or player_lifes == 0:
         current_round = 0
     

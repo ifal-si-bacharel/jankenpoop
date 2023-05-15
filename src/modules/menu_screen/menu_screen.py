@@ -1,12 +1,21 @@
+import pygame
 import src.common.screen_display as screen
 from src.common.components.text import Text
 from src.common.components.button import Button
 
-welcome_text = Text("Bem-vindo ao jogo! Faça sua escolha.", (255, 255, 198), 4.5, 100)
-button = Button(2,200,(255,255,255),'start')
+welcome_text = Text("Bem-vindo ao jogo Jankenpoop!", (255, 255, 198), 3.5, 190)
+press_start = Text("Precione START para iniciar", (255, 255, 198), 3.0, 220)
+
+
 def update_screen():
-    button.onclick(lambda: screen.switch_screen('match'))
+    
+    keys = pygame.key.get_pressed() 
+    if keys[pygame.K_RETURN]:
+
+        screen.switch_screen('match')
+
 
 def draw_screen():
-    button.draw()
+    welcome_text.draw()
+    press_start.draw()
 
