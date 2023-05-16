@@ -33,8 +33,6 @@ def choice(option):
     text = Text('', (255,255,255), 6,200)
     screen.switch_screen('menu')
 
-
-
 def pedra():
   choice(1)
 def papel():

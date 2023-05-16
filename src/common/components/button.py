@@ -8,13 +8,14 @@ class Button():
     
   def __init__(self, coordx,coordy, color, name, width = 100, height = 100, ):
     self.coordy = coordy
+
     self.coordx = coordx
     self.color = color
     self.name = name
     self.width = width
     self.height = height
-    
-    self.buttonArea = pg.Rect(screen_width() / self.coordx - 50, self.coordy, self.width , self.height)
+    self.button_area = pg.Rect(screen_width() / self.coordx - 50, self.coordy, self.width , self.height)
+
 
   def draw(self):
     """
@@ -32,3 +33,4 @@ class Button():
     if self.buttonArea.collidepoint(mousePosition):
       if pg.mouse.get_pressed()[0] == 1:
         func()
+
