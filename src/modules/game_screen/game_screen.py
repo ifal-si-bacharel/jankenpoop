@@ -1,50 +1,59 @@
-from src.config.window import window
+from src.config.window import window, screen_height
 from src.common.components.button import Button
-from src.modules.game_screen.script.match import player_choice
 from src.common.components.text import Text
+from src.modules.game_screen.script.match import player_choice
+import src.common.screen_display as screen
+
 
 display = window()
-display_width = display.get_width()
+ytemplate = screen_height() / 1.5 - 50
 
-button_pedra = Button(5,(200,0,0),'pedra')
-button_papel = Button(2,(0,200,0),'papel')
-button_tesoura = Button(1.25,(0,0,200),'tesoura')
-
-welcome_text = Text("Bem-vindo ao jogo! Faça sua escolha.", (255, 255, 198), 4.5, 100)
-
-def set_fill():
-  display.fill((0,0,0))
+button_pedra = Button(5,ytemplate,(200,0,0),'pedra')
+button_papel = Button(2,ytemplate,(0,200,0),'papel')
+button_tesoura = Button(1.25,ytemplate,(0,0,200),'tesoura')
+text = Text('', (255,255,255), 6,200)
+player_choice_text = Text('', (255, 255, 255), 6,135)
+machine_choice_text = Text('', (255, 255, 255), 2,165)
 
 def choice(option):
-  set_fill()
-  check = player_choice(option)
-  player_choice_text = Text(check[1], (255, 255, 255), 6,135)
-  machine_choice_text = Text(check[2], (255, 255, 255), 2,165)
+  global text, player_choice_text, machine_choice_text
 
-  player_choice_text.draw()
-  machine_choice_text.draw()
-  if check[0] == 1:
-    text = Text("Você ganhou!", (0,255,0), 6,200)
-    text.draw()
-  elif check[0] == 0:
-    text = Text("Empate!", (0,0,255), 6,200)
-    text.draw()
-  else:
-    text = Text("Você perdeu!", (255,0,0), 6,200)
-    text.draw()
+  check = player_choice(option)
+
+  player_choice_text = Text(check[1][0], (255, 255, 255), 6,135)
+  
+  machine_choice_text = Text(check[1][1], (255, 255, 255), 2,165)
+
+  text = Text(check[0], (255,255,255), 6,200)
+
+
+  if 0 in check[2]:
+    player_choice_text = Text('', (255, 255, 255), 6,135)
+    machine_choice_text = Text('', (255, 255, 255), 2,165)
+    text = Text('', (255,255,255), 6,200)
+    screen.switch_screen('menu')
+
+def pedra():
+  choice(1)
+def papel():
+  choice(2)
+def tesoura():
+  choice(3)
 
 def update_screen():
-  if button_pedra.is_hover():
-    choice(1)
-
-  elif button_papel.is_hover():
-    choice(2)
-
-  elif button_tesoura.is_hover():
-    choice(3)
-
+  button_pedra.onclick(pedra)
+  button_papel.onclick(papel)
+  button_tesoura.onclick(tesoura)
+    
 def draw_screen():
-  welcome_text.draw()
+  
+  text.draw()  
+  player_choice_text.draw()
+  machine_choice_text.draw()
   button_pedra.draw()
   button_papel.draw()
   button_tesoura.draw()
+  
+
+
+
