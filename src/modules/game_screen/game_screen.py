@@ -42,14 +42,14 @@ def update_screen():
   button_tesoura.onclick(lambda:choice(3))
 
 clock = pygame.time.Clock()
-tempo_inicio = pygame.time.get_ticks()    
+time_start = pygame.time.get_ticks()    
 
 def draw_screen():
   text.draw()  
   player_choice_text.draw()
-  tempo_decorrido = (pygame.time.get_ticks() - tempo_inicio) / 1000
-  tempo_decorrido_texto = Text(f'Tempo decorrido: {tempo_decorrido:.1f}s', (255, 255, 255), 6, 6)
-  tempo_decorrido_texto.draw()
+  time_decorrido = (pygame.time.get_ticks() - time_start) / 1000
+  time_decorrido_text = Text(f'Time: {time_decorrido:.1f}s', (255, 255, 255), 6, 6)
+  time_decorrido_text.draw()
   clock.tick()
   machine_choice_text.draw()
   pygame.display.update()
