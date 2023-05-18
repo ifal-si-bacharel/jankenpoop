@@ -3,7 +3,9 @@ from src.common.components.button import Button
 from src.common.components.text import Text
 from src.modules.game_screen.script.match import player_choice
 import src.common.screen_display as screen
-
+import pygame
+import sys
+import pygame.time
 
 display = window()
 ytemplate = screen_height() / 1.5 - 50
@@ -33,23 +35,24 @@ def choice(option):
     text = Text('', (255,255,255), 6,200)
     screen.switch_screen('menu')
 
-def pedra():
-  choice(1)
-def papel():
-  choice(2)
-def tesoura():
-  choice(3)
-
-def update_screen():
-  button_pedra.onclick(pedra)
-  button_papel.onclick(papel)
-  button_tesoura.onclick(tesoura)
-    
-def draw_screen():
   
+def update_screen():
+  button_pedra.onclick(lambda:choice(1))
+  button_papel.onclick(lambda:choice(2))
+  button_tesoura.onclick(lambda:choice(3))
+
+clock = pygame.time.Clock()
+tempo_inicio = pygame.time.get_ticks()    
+
+def draw_screen():
   text.draw()  
   player_choice_text.draw()
+  tempo_decorrido = (pygame.time.get_ticks() - tempo_inicio) / 1000
+  tempo_decorrido_texto = Text(f'Tempo decorrido: {tempo_decorrido:.1f}s', (255, 255, 255), 6, 6)
+  tempo_decorrido_texto.draw()
+  clock.tick()
   machine_choice_text.draw()
+  pygame.display.update()
   button_pedra.draw()
   button_papel.draw()
   button_tesoura.draw()
