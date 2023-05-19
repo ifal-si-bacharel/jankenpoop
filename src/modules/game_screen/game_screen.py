@@ -10,6 +10,9 @@ import pygame.time
 display = window()
 xtemplate = screen_width()
 ytemplate = screen_height() / 1.5 - 50
+#timer
+clock = pygame.time.Clock()
+time_start = pygame.time.get_ticks() 
 
 #hearts
 full_heart = pygame.image.load('src/sprites/full_heart.png')
@@ -24,9 +27,10 @@ button_tesoura = Button(1.25,ytemplate,(0,0,200),'tesoura')
 text = Text('', (255,255,255), 6,200)
 player_choice_text = Text('', (255, 255, 255), 6,135)
 machine_choice_text = Text('', (255, 255, 255), 2,165)
+check = ['','',[3,3]]
 
 def choice(option):
-  global text, player_choice_text, machine_choice_text
+  global check, text, player_choice_text, machine_choice_text
 
   check = player_choice(option)
 
@@ -41,33 +45,42 @@ def choice(option):
     player_choice_text = Text('', (255, 255, 255), 6,135)
     machine_choice_text = Text('', (255, 255, 255), 2,165)
     text = Text('', (255,255,255), 6,200)
+    check = ['','',[3,3]]
     screen.switch_screen('menu')
 
   
 def update_screen():
+  global time_decorrido_text
   button_pedra.onclick(lambda:choice(1))
   button_papel.onclick(lambda:choice(2))
   button_tesoura.onclick(lambda:choice(3))
+  time_decorrido = 30 - (pygame.time.get_ticks() - time_start) / 1000
+  time_decorrido_text = Text(f'Time: {time_decorrido:.0f}s', (255, 255, 255), 2, 6)
 
-clock = pygame.time.Clock()
-time_start = pygame.time.get_ticks()    
+   
 
 def draw_screen():
   text.draw()  
   player_choice_text.draw()
-  time_decorrido = (pygame.time.get_ticks() - time_start) / 1000
-  time_decorrido_text = Text(f'Time: {time_decorrido:.1f}s', (255, 255, 255), 2, 6)
   time_decorrido_text.draw()
   clock.tick()
   machine_choice_text.draw()
   button_pedra.draw()
   button_papel.draw()
   button_tesoura.draw()
-  display.blit(full_heart, (0,0))
-  display.blit(full_heart, (40,0))
-  display.blit(full_heart, (80,0))
-  display.blit(full_heart, (xtemplate - 40, 0))
-  display.blit(full_heart, (xtemplate - 80,0))
-  display.blit(full_heart, (xtemplate - 120,0))
+  x = 0 
+  x2 = 40
+  for i in range(1,4):
+    if check[2][0]>= i:
+      display.blit(full_heart, (x, 0))
+    else:
+      display.blit(empty_heart, (x, 0))
+    x += 40
+  for i in range(1,4):
+    if check[2][1]>= i:
+      display.blit(full_heart, (xtemplate - x2, 0))
+    else:
+      display.blit(empty_heart, (xtemplate -x2, 0))
+    x2 += 40
 
 
