@@ -4,7 +4,6 @@ from src.common.components.text import Text
 from src.modules.game_screen.script.match import player_choice
 import src.common.screen_display as screen
 import pygame
-import sys
 import pygame.time
 
 display = window()
@@ -29,8 +28,18 @@ player_choice_text = Text('', (255, 255, 255), 6,135)
 machine_choice_text = Text('', (255, 255, 255), 2,165)
 check = ['','',[3,3]]
 
+
+def end_round():
+  global time_start, check, text, player_choice_text, machine_choice_text
+  time_start = pygame.time.get_ticks() 
+  player_choice_text = Text('', (255, 255, 255), 6,135)
+  machine_choice_text = Text('', (255, 255, 255), 2,165)
+  text = Text('', (255,255,255), 6,200)
+  check = ['','',[3,3]]
+  screen.switch_screen('menu')
+
 def choice(option):
-  global check, text, player_choice_text, machine_choice_text
+  global time_start, check, text, player_choice_text, machine_choice_text
 
   check = player_choice(option)
 
@@ -42,20 +51,20 @@ def choice(option):
 
 
   if 0 in check[2]:
-    player_choice_text = Text('', (255, 255, 255), 6,135)
-    machine_choice_text = Text('', (255, 255, 255), 2,165)
-    text = Text('', (255,255,255), 6,200)
-    check = ['','',[3,3]]
-    screen.switch_screen('menu')
+    end_round()
 
-  
+
 def update_screen():
   global time_decorrido_text
+  time_decorrido = 60 - (pygame.time.get_ticks() - time_start) / 1000
+  time_decorrido_text = Text(f'Time: {time_decorrido:.0f}s', (255, 255, 255), 2, 6)
+  if time_decorrido <= 0:
+    end_round()
   button_pedra.onclick(lambda:choice(1))
   button_papel.onclick(lambda:choice(2))
   button_tesoura.onclick(lambda:choice(3))
-  time_decorrido = 30 - (pygame.time.get_ticks() - time_start) / 1000
-  time_decorrido_text = Text(f'Time: {time_decorrido:.0f}s', (255, 255, 255), 2, 6)
+  
+  
 
    
 
