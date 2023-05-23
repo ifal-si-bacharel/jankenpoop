@@ -21,7 +21,7 @@ class Button():
     """
     desenha botões na tela:
     """
-    pg.draw.rect(self.display, self.color, self.buttonArea)
+    pg.draw.rect(self.display, self.color, self.button_area)
     
     if self.name:
       text = Text(self.name, (255, 255, 255), self.coordx, self.coordy)
@@ -30,7 +30,7 @@ class Button():
   def onclick(self, func): 
     """verifica se o botão foi clicado"""
     mousePosition = pg.mouse.get_pos()
-    if self.buttonArea.collidepoint(mousePosition):
+    if self.button_area.collidepoint(mousePosition):
       if pg.mouse.get_pressed()[0] == 1:
         func()
 
