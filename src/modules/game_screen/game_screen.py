@@ -11,7 +11,6 @@ xtemplate = screen_width()
 ytemplate = screen_height() / 1.5 - 50
 #timer
 clock = pygame.time.Clock()
-time_start = pygame.time.get_ticks() 
 
 #hearts
 full_heart = pygame.image.load('src/sprites/full_heart.png')
@@ -53,13 +52,14 @@ def choice(option):
   if 0 in check[2]:
     end_round()
 
-
-def update_screen():
+def countdown_tick(time_start):
   global time_decorrido_text
   time_decorrido = 60 - (pygame.time.get_ticks() - time_start) / 1000
   time_decorrido_text = Text(f'Time: {time_decorrido:.0f}s', (255, 255, 255), 2, 6)
   if time_decorrido <= 0:
     end_round()
+def update_screen(time_start):
+  countdown_tick(time_start)
   button_pedra.onclick(lambda:choice(1))
   button_papel.onclick(lambda:choice(2))
   button_tesoura.onclick(lambda:choice(3))
@@ -72,7 +72,6 @@ def draw_screen():
   text.draw()  
   player_choice_text.draw()
   time_decorrido_text.draw()
-  clock.tick()
   machine_choice_text.draw()
   button_pedra.draw()
   button_papel.draw()
