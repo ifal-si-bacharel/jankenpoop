@@ -10,11 +10,12 @@ def main():
   run = True
   while run:
     setup_clock()
+    frame()
+    pygame.display.update()
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         run = False
-      frame()
-      pygame.display.update()
+      
 
   pygame.quit()
 
