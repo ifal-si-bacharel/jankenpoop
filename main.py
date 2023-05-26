@@ -5,9 +5,7 @@ from src.common.screen_display import frame
 
 
 def main():
-  """
-    Função principal para iniciar a aplicação
-  """
+  
 
   run = True
   while run:
