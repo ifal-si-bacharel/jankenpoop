@@ -6,6 +6,9 @@ import src.common.screen_display as screen
 import pygame
 import pygame.time
 
+pygame.mixer.init()
+
+
 display = window()
 xtemplate = screen_width()
 ytemplate = screen_height() / 1.5 - 50
@@ -27,6 +30,8 @@ player_choice_text = Text('', (255, 255, 255), 6,135)
 machine_choice_text = Text('', (255, 255, 255), 2,165)
 check = ['','',[3,3]]
 
+musicmatch_played = False  # para controlar a reprodução da música
+pygame.mixer.music.load("music/musicmenu.ogg")
 
 def end_round(result):
   global time_start, check, text, player_choice_text, machine_choice_text
@@ -64,11 +69,17 @@ def countdown_tick(time_start):
   time_decorrido_text = Text(f'Time: {time_decorrido:.0f}s', (255, 255, 255), 2, 6)
   if time_decorrido <= 0:
     end_round(0)
+
 def update_screen(time_start):
-  countdown_tick(time_start)
-  button_pedra.onclick(lambda:choice(1))
-  button_papel.onclick(lambda:choice(2))
-  button_tesoura.onclick(lambda:choice(3))
+    global musicmatch_played
+    countdown_tick(time_start)
+    if not musicmatch_played:
+        pygame.mixer.music.load("music/musicmatch.ogg")
+        pygame.mixer.music.play()
+        musicmatch_played = True
+    button_pedra.onclick(lambda: choice(1))
+    button_papel.onclick(lambda: choice(2))
+    button_tesoura.onclick(lambda: choice(3))
   
   
 
