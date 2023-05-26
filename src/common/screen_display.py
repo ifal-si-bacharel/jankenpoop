@@ -1,6 +1,7 @@
 from src.config.window import window
 import src.modules.game_screen.game_screen as match
 import src.modules.menu_screen.menu_screen as menu
+import src.modules.result_screen.result_screen as result
 import pygame
 
 current_screen = 'menu'
@@ -25,3 +26,11 @@ def frame():
     display.fill((0,0,0))
     match.update_screen(time_start)
     match.draw_screen()
+  if current_screen == 'win':
+    display.fill((0,0,0))
+    result.update_screen(1)
+    result.draw_screen()
+  if current_screen == 'lose':
+    display.fill((0,0,0))
+    result.update_screen(0)
+    result.draw_screen()

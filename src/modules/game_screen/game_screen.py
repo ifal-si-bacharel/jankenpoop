@@ -28,14 +28,18 @@ machine_choice_text = Text('', (255, 255, 255), 2,165)
 check = ['','',[3,3]]
 
 
-def end_round():
+def end_round(result):
   global time_start, check, text, player_choice_text, machine_choice_text
   time_start = pygame.time.get_ticks() 
   player_choice_text = Text('', (255, 255, 255), 6,135)
   machine_choice_text = Text('', (255, 255, 255), 2,165)
   text = Text('', (255,255,255), 6,200)
   check = ['','',[3,3]]
-  screen.switch_screen('menu')
+  if result == 0:
+    screen.switch_screen('lose')
+  else:
+    screen.switch_screen('win')
+  
 
 def choice(option):
   global time_start, check, text, player_choice_text, machine_choice_text
@@ -49,15 +53,17 @@ def choice(option):
   text = Text(check[0], (255,255,255), 6,200)
 
 
-  if 0 in check[2]:
-    end_round()
+  if check[2][0] == 0:
+    end_round(0)
+  if check[2][1] == 0:
+    end_round(1)
 
 def countdown_tick(time_start):
   global time_decorrido_text
   time_decorrido = 60 - (pygame.time.get_ticks() - time_start) / 1000
   time_decorrido_text = Text(f'Time: {time_decorrido:.0f}s', (255, 255, 255), 2, 6)
   if time_decorrido <= 0:
-    end_round()
+    end_round(0)
 def update_screen(time_start):
   countdown_tick(time_start)
   button_pedra.onclick(lambda:choice(1))
