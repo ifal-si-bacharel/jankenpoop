@@ -30,7 +30,11 @@ def frame():
     display.fill((0,0,0))
     result.update_screen(1)
     result.draw_screen()
-  if current_screen == 'lose':
+  if current_screen == 'timeout':
     display.fill((0,0,0))
     result.update_screen(0)
+    result.draw_screen()
+  if current_screen == 'gameover':
+    display.fill((0,0,0))
+    result.update_screen(-1)
     result.draw_screen()
