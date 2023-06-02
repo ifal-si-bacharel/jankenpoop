@@ -3,19 +3,27 @@ import src.common.screen_display as screen
 from src.common.components.text import Text
 from src.common.components.button import Button
 
-welcome_text = Text("Bem-vindo ao jogo Jankenpoop!", (255, 255, 198), 3.5, 190)
-press_start = Text("Pressione START para iniciar", (255, 255, 198), 3.0, 220)
 
 
+welcome_text = Text("Bem-vindo ao jogo Jankenpoop!", (255, 255, 198), 6, 190)
+press_start = Text("Pressione Enter para iniciar", (255, 255, 198), 6, 220)
+
+
+
+
+play_music = False
 def update_screen():
-    
-    keys = pygame.key.get_pressed() 
+    global play_music
+    keys = pygame.key.get_pressed()
+    if not play_music:
+        pygame.mixer.music.load("src/music/musicmenu.ogg")
+        pygame.mixer_music.play()
+        play_music = True 
     if keys[pygame.K_RETURN]:
-
+        play_music = False
+        pygame.mixer.music.stop()
         screen.switch_screen('match')
-
 
 def draw_screen():
     welcome_text.draw()
     press_start.draw()
-

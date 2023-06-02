@@ -11,17 +11,17 @@ class Text():
     self.font = pg.font.SysFont('Calibri', 25)
     self.coordx = coordx
     self.coordy = coordy
-
-    self.half_font_width = self.font.get_linesize()+5  
+    self.text = text
+    self.half_font_width = len(self.text)*11  
     self.half_font_height = self.font.get_height() / 2  
     self.CENTER_CONSTANT = 25
 
     self.position = (
-      (screen_width() / self.coordx) - self.half_font_width,
+      ((screen_width() /12) * self.coordx) - self.half_font_width/2,
       (self.coordy + self.CENTER_CONSTANT+self.half_font_height)
     )
     
-    self.text = text
+    
     self.color = color
 
   def draw(self):
