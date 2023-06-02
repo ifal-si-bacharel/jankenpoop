@@ -5,8 +5,8 @@ from src.common.components.button import Button
 
 
 
-welcome_text = Text("Bem-vindo ao jogo Jankenpoop!", (255, 255, 198), 3.5, 190)
-press_start = Text("Pressione START para iniciar", (255, 255, 198), 3.0, 220)
+welcome_text = Text("Bem-vindo ao jogo Jankenpoop!", (255, 255, 198), 6, 190)
+press_start = Text("Pressione Enter para iniciar", (255, 255, 198), 6, 220)
 
 
 
@@ -14,8 +14,6 @@ press_start = Text("Pressione START para iniciar", (255, 255, 198), 3.0, 220)
 play_music = False
 def update_screen():
     global play_music
-    
-
     keys = pygame.key.get_pressed()
     if not play_music:
         pygame.mixer.music.load("src/music/musicmenu.ogg")

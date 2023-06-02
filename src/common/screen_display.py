@@ -8,9 +8,8 @@ current_screen = 'menu'
 display = window()
 
 def switch_screen(screen):
-  global time_start
+  global time_start, current_screen 
   print(screen)
-  global current_screen 
   current_screen = screen
   time_start = pygame.time.get_ticks() 
   
@@ -23,8 +22,8 @@ def frame():
     menu.update_screen()
     menu.draw_screen()
   if current_screen == 'match':
-    display.fill((0,0,0))
     match.update_screen(time_start)
+    display.fill((0,0,0))
     match.draw_screen()
   if current_screen == 'win':
     display.fill((0,0,0))
