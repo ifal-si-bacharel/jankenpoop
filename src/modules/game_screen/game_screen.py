@@ -43,6 +43,7 @@ empty_heart_on_screen = pygame.transform.scale(empty_heart, (20, 20))
 button_pedra = Button(3,ytemplate,img='src/sprites/buttons/rock.png')
 button_papel = Button(6,ytemplate,img='src/sprites/buttons/paper.png')
 button_tesoura = Button(9,ytemplate,img='src/sprites/buttons/siccssors.png')
+pause = Button(1,40,img='src/sprites/buttons/pause.png',width=50,height=50)
 
 #set_outputs
 text = Text('', (255,255,255), 6,300)
@@ -97,10 +98,10 @@ def choice(option):
   if enemy_character.current_lifes == 0:
     end_round(1)
 
-def countdown_tick(time_start):
-  global time_decorrido_text
-  time_decorrido = 60 - (pygame.time.get_ticks() - time_start) / 1000
-  time_decorrido_text = Text(f'{time_decorrido:2.0f}', (255, 255, 255), 6.5,3)
+def countdown_tick(time_elapsed):
+  global time_decorrido_text, time_decorrido
+  time_decorrido = 120 - time_elapsed / 1000
+  time_decorrido_text = Text(f'{time_decorrido:2.0f}', (255, 255, 255), 6,3)
   if time_decorrido <= 0:
     end_round(0,0)
 
@@ -142,16 +143,18 @@ def update_screen(time_start):
     button_pedra.onclick(lambda: choice(1))
     button_papel.onclick(lambda: choice(2))
     button_tesoura.onclick(lambda: choice(3))
+    pause.onclick(lambda: screen.switch_screen('pause'))
     
   
 def draw_screen():
-    
-  time_decorrido_text.draw()
+  if time_decorrido <=30:
+    time_decorrido_text.draw()
   button_pedra.draw()
   button_papel.draw()
   button_tesoura.draw()
   player_character.draw()
   enemy_character.draw()
+  pause.draw()
 
 
 
