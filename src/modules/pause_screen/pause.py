@@ -1,13 +1,9 @@
 import pygame
 import src.common.screen_display as screen
 from src.common.components.text import Text
-from src.common.components.button import Button
-
-
 
 welcome_text = Text("JOGO PAUSADO", (255, 255, 198), 6, 190)
 press_start = Text("Pressione Enter para retomar", (255, 255, 198), 6, 220)
-
 
 def update_screen():
     keys = pygame.key.get_pressed()  

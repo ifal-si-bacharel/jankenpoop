@@ -11,7 +11,6 @@ import configparser
 
 pygame.mixer.init()
 
-
 config = configparser.ConfigParser()
 config.read('config.ini')
 timer_limit = int(config['GAMEPARAMS']['Timer'])
@@ -22,13 +21,13 @@ ytemplate = (screen_height()/12) * 10
 #timer
 clock = pygame.time.Clock()
 
-
-
 #buttons
-button_pedra = Button(3,ytemplate,img='src/sprites/buttons/rock.png')
-button_papel = Button(6,ytemplate,img='src/sprites/buttons/paper.png')
-button_tesoura = Button(9,ytemplate,img='src/sprites/buttons/siccssors.png')
-pause = Button(1,40,img='src/sprites/buttons/pause.png',width=50,height=50)
+button_pedra = Button(3,ytemplate,img='assets/sprites/buttons/rock.png')
+button_papel = Button(6,ytemplate,img='assets/sprites/buttons/paper.png')
+button_tesoura = Button(9,ytemplate,img='assets/sprites/buttons/siccssors.png')
+pause = Button(1,40,img='assets/sprites/buttons/pause.png',width=50,height=50)
+
+character_state = 'main'
 
 #set_outputs
 text = Text('', (255,255,255), 6,300)
@@ -41,17 +40,18 @@ def create_characters():
   global player_character, enemy_character
   player_character = Character(3,
                              5,
-                             img='src/sprites/player/main.png',
+                             animations={'blink':['assets/sprites/enemy/blink',0],
+                                          'main':['assets/sprites/enemy/main',2],
+                                          'wait':['assets/sprites/enemy/wait',3]},
                              width=200,
                              height=200,
                              name='VOCÊ',
                              color=(0,0,255))
   enemy_character = Character(9,
                               5,
-                              img='src/sprites/enemy/main.png',
-                              animations={'blink':['src/sprites/enemy/blink',0],
-                                          'main':['src/sprites/enemy/main',2],
-                                          'wait':['src/sprites/enemy/wait',3]},
+                              animations={'blink':['assets/sprites/enemy/blink',0],
+                                          'main':['assets/sprites/enemy/main',2],
+                                          'wait':['assets/sprites/enemy/wait',3]},
                               width=200,
                               height=200,
                               name='INIMIGO',
@@ -65,13 +65,13 @@ create_characters()
 def play_music():
   global musicmatch_played
   if not musicmatch_played:
-        pygame.mixer.music.load("src/music/musicmatch.ogg")
+        pygame.mixer.music.load("assets/music/musicmatch.ogg")
         pygame.mixer.music.play()
         musicmatch_played = True
   
 
 def choice(option):
-  global time_start, check, text, player_choice_text, machine_choice_text
+  global time_start, check, text, player_choice_text, machine_choice_text, character_state
   
   check = player_choice(option)
   text = Text(check[0], (255,255,255), 6,300)
@@ -83,21 +83,22 @@ def choice(option):
   
   display.fill((0,0,0))
   player_character.draw(True)
-  enemy_character.animate('main' ,'wait')
+
+  character_state = 'wait';
+
   pygame.display.update()
-  time.sleep(3)
   
   display.fill((0,0,0))
-  player_character.img = f'src/sprites/player/{check[1][0]}'
-  enemy_character.img = f'src/sprites/enemy/{check[1][1]}'
+  player_character.img = f'assets/sprites/player/{check[1][0]}'
+  enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
   player_character.draw(False)
   enemy_character.draw(False)
   text.draw()
   pygame.display.update()
   time.sleep(2)
 
-  player_character.img = f'src/sprites/player/main.png'
-  enemy_character.img = f'src/sprites/enemy/main.png'
+  player_character.img = f'assets/sprites/player/main.png'
+  enemy_character.img = f'assets/sprites/enemy/main.png'
 
   if player_character.current_lifes == 0:
     end_round(0,1)
@@ -117,7 +118,6 @@ def end_round(result, type=0):
   musicmatch_played = False
   pygame.mixer.music.stop()
   create_characters()
-
 
   text = Text('', (255,255,255), 6,200)
   if result == 0:
@@ -142,13 +142,14 @@ def update_screen(time_start):
 def draw_screen():
   
   if time_decorrido <= timer_limit-1:
-    if time_decorrido <=30:
+    if time_decorrido <= 30:
       time_decorrido_text.draw()
     button_pedra.draw()
     button_papel.draw()
     button_tesoura.draw()
     player_character.draw()
-    enemy_character.animate('blink')
+    enemy_character.animate(character_state)
+
     pause.draw()
     return
   return
