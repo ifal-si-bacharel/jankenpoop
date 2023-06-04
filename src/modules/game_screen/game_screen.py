@@ -7,9 +7,14 @@ import src.common.screen_display as screen
 import pygame
 import pygame.time
 import time
+import configparser
+
 pygame.mixer.init()
 
 
+config = configparser.ConfigParser()
+config.read('config.ini')
+timer_limit = int(config['GAMEPARAMS']['Timer'])
 display = window()
 xtemplate = screen_width()
 ytemplate = (screen_height()/12) * 10
@@ -17,27 +22,7 @@ ytemplate = (screen_height()/12) * 10
 #timer
 clock = pygame.time.Clock()
 
-#character
-player_character = Character(3,
-                             5,
-                             img='src/sprites/player/main.png',
-                             width=200,
-                             height=200,
-                             name='VOCÊ',
-                             color=(0,0,255))
-enemy_character = Character(9,
-                            5,
-                            img='src/sprites/enemy/main.png',
-                            width=200,
-                            height=200,
-                            name='INIMIGO',
-                            color=(255,0,0))
 
-#hearts
-full_heart = pygame.image.load('src/sprites/full_heart.png')
-empty_heart = pygame.image.load('src/sprites/empty_heart.png')
-full_heart_on_screen = pygame.transform.scale(full_heart, (20, 20))
-empty_heart_on_screen = pygame.transform.scale(empty_heart, (20, 20))
 
 #buttons
 button_pedra = Button(3,ytemplate,img='src/sprites/buttons/rock.png')
@@ -47,12 +32,35 @@ pause = Button(1,40,img='src/sprites/buttons/pause.png',width=50,height=50)
 
 #set_outputs
 text = Text('', (255,255,255), 6,300)
-player_choice_text = Text('', (255, 255, 255), 6,135)
-machine_choice_text = Text('', (255, 255, 255), 2,165)
-check = ['','',[3,3]]
+check = ['','']
 
 #set_music
 musicmatch_played = False  # para controlar a reprodução da música
+
+def create_characters():
+  global player_character, enemy_character
+  player_character = Character(3,
+                             5,
+                             img='src/sprites/player/main.png',
+                             width=200,
+                             height=200,
+                             name='VOCÊ',
+                             color=(0,0,255))
+  enemy_character = Character(9,
+                              5,
+                              img='src/sprites/enemy/main.png',
+                              animations={'blink':['src/sprites/enemy/blink',0],
+                                          'main':['src/sprites/enemy/main',2],
+                                          'wait':['src/sprites/enemy/wait',3]},
+                              width=200,
+                              height=200,
+                              name='INIMIGO',
+                              color=(255,0,0))
+
+#characters
+create_characters()
+
+
 
 def play_music():
   global musicmatch_played
@@ -74,10 +82,8 @@ def choice(option):
     player_character.current_lifes -= 1  
   
   display.fill((0,0,0))
-  player_character.img = f'src/sprites/player/wait.png'
-  enemy_character.img = f'src/sprites/enemy/wait.png'
-  player_character.draw(False)
-  enemy_character.draw(False)
+  player_character.draw(True)
+  enemy_character.animate('main' ,'wait')
   pygame.display.update()
   time.sleep(3)
   
@@ -100,31 +106,18 @@ def choice(option):
 
 def countdown_tick(time_elapsed):
   global time_decorrido_text, time_decorrido
-  time_decorrido = 120 - time_elapsed / 1000
+  time_decorrido = timer_limit - time_elapsed / 1000
   time_decorrido_text = Text(f'{time_decorrido:2.0f}', (255, 255, 255), 6,3)
   if time_decorrido <= 0:
     end_round(0,0)
 
 def end_round(result, type=0):
-  global time_start, check, text, player_choice_text, machine_choice_text, musicmatch_played,player_character,enemy_character
+  global time_start, check, text, musicmatch_played,player_character,enemy_character
   time_start = pygame.time.get_ticks() 
   musicmatch_played = False
-  print(musicmatch_played)
   pygame.mixer.music.stop()
-  player_character = Character(3,
-                             5,
-                             img='src/sprites/player/main.png',
-                             width=200,
-                             height=200,
-                             name='VOCÊ',
-                             color=(0,0,255))
-  enemy_character = Character(9,
-                            5,
-                            img='src/sprites/enemy/main.png',
-                            width=200,
-                            height=200,
-                            name='INIMIGO',
-                            color=(255,0,0))
+  create_characters()
+
 
   text = Text('', (255,255,255), 6,200)
   if result == 0:
@@ -147,14 +140,17 @@ def update_screen(time_start):
     
   
 def draw_screen():
-  if time_decorrido <=30:
-    time_decorrido_text.draw()
-  button_pedra.draw()
-  button_papel.draw()
-  button_tesoura.draw()
-  player_character.draw()
-  enemy_character.draw()
-  pause.draw()
-
+  
+  if time_decorrido <= timer_limit-1:
+    if time_decorrido <=30:
+      time_decorrido_text.draw()
+    button_pedra.draw()
+    button_papel.draw()
+    button_tesoura.draw()
+    player_character.draw()
+    enemy_character.animate('blink')
+    pause.draw()
+    return
+  return
 
 

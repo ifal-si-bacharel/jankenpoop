@@ -9,7 +9,6 @@ config.read('config.ini')
 
 def main():
   run = True
-  
   while run:
     pygame.mixer.music.set_volume(float(config['GAMEPARAMS']['Volume']))  # Ajusta o volume da música 
     setup_clock()
