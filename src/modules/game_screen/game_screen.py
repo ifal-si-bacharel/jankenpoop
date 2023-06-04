@@ -40,9 +40,8 @@ def create_characters():
   global player_character, enemy_character
   player_character = Character(3,
                              5,
-                             animations={'blink':['assets/sprites/enemy/blink',0],
-                                          'main':['assets/sprites/enemy/main',2],
-                                          'wait':['assets/sprites/enemy/wait',3]},
+                             animations={'main':['assets/sprites/player/main',2],
+                                          'wait':['assets/sprites/player/wait',3]},
                              width=200,
                              height=200,
                              name='VOCÊ',
@@ -82,23 +81,13 @@ def choice(option):
     player_character.current_lifes -= 1  
   
   display.fill((0,0,0))
-  player_character.draw(True)
-
-  character_state = 'wait';
-
-  pygame.display.update()
-  
-  display.fill((0,0,0))
   player_character.img = f'assets/sprites/player/{check[1][0]}'
   enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
-  player_character.draw(False)
-  enemy_character.draw(False)
+  player_character.draw(True)
+  enemy_character.draw(True)
   text.draw()
   pygame.display.update()
   time.sleep(2)
-
-  player_character.img = f'assets/sprites/player/main.png'
-  enemy_character.img = f'assets/sprites/enemy/main.png'
 
   if player_character.current_lifes == 0:
     end_round(0,1)
@@ -147,7 +136,7 @@ def draw_screen():
     button_pedra.draw()
     button_papel.draw()
     button_tesoura.draw()
-    player_character.draw()
+    player_character.animate('main')
     enemy_character.animate(character_state)
 
     pause.draw()
