@@ -88,6 +88,15 @@ def choice(option):
   elif check[0] == "Você perdeu!":
     player_character.current_lifes -= 1  
   
+  # display.fill((0,0,0))
+  # player_character.img = f'assets/sprites/player/{check[1][0]}'
+  # enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
+  # player_character.draw(True)
+  # enemy_character.draw(True)
+  # text.draw()
+  # pygame.display.update()
+  # time.sleep(2)
+
   if player_character.current_lifes == 0:
     end_round(0,1)
   if enemy_character.current_lifes == 0:
@@ -134,18 +143,8 @@ def draw_screen():
     button_pedra.draw()
     button_papel.draw()
     button_tesoura.draw()
-    # player_character.draw()
-    enemy_character.animate(get_character_state())
-    print(get_character_state())
-    if get_character_state() == 'wait':
-      time.sleep(2)
-
-
-    # player_character.img = f'assets/sprites/player/{check[1][0]}'
-    # enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
-    # # player_character.draw()
-    # enemy_character.draw()
-    # text.draw()
+    player_character.animate('main')
+    enemy_character.animate(character_state)
 
     pause.draw()
     return
