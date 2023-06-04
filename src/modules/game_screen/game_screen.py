@@ -87,15 +87,6 @@ def choice(option):
     enemy_character.current_lifes -= 1      
   elif check[0] == "Você perdeu!":
     player_character.current_lifes -= 1  
-  
-  # display.fill((0,0,0))
-  # player_character.img = f'assets/sprites/player/{check[1][0]}'
-  # enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
-  # player_character.draw(True)
-  # enemy_character.draw(True)
-  # text.draw()
-  # pygame.display.update()
-  # time.sleep(2)
 
   if player_character.current_lifes == 0:
     end_round(0,1)
@@ -125,6 +116,13 @@ def end_round(result, type=0):
   else:
     screen.switch_screen('win')
 
+def draw_result():
+  player_character.img = f'assets/sprites/player/{check[1][0]}'
+  enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
+  player_character.draw(True)
+  enemy_character.draw(True)
+  text.draw()
+  # time.sleep(2)
 
 #screen_funcs
 def update_screen(time_start):
@@ -135,7 +133,6 @@ def update_screen(time_start):
     button_tesoura.onclick(lambda: choice(3))
     pause.onclick(lambda: screen.switch_screen('pause'))
     
-  
 def draw_screen():
   if time_decorrido <= timer_limit-1:
     if time_decorrido <= 30:
@@ -143,8 +140,16 @@ def draw_screen():
     button_pedra.draw()
     button_papel.draw()
     button_tesoura.draw()
-    player_character.animate('main')
-    enemy_character.animate(character_state)
+    
+    current_player_animation = player_character.animate(get_character_state())
+    current_enemy_animation  = enemy_character.animate(get_character_state())
+
+    print(current_player_animation)
+
+    if get_character_state() == 'wait' and current_player_animation != 'wait':
+      print('entrou')
+      set_character_state('main')
+      # draw_result()
 
     pause.draw()
     return
