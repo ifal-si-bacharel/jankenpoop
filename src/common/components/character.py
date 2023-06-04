@@ -36,11 +36,13 @@ class Character():
     return list_animations
 
   
-  def animate(self, next_animation='', current=''):
+  def animate(self,lifes=True, next_animation='', current=''):
+    if lifes:
+      self.draw_info()
     if current:
       self.current_animation = current
-    self.draw_info()
-    animation = self.animations[self.current_animation].play(next_animation)
+    animation = self.animations[self.current_animation].play()
+
     if animation == 'over':
       self.current_animation = 'main'
       return self.current_animation

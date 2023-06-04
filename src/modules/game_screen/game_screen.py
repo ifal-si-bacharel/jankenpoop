@@ -76,9 +76,9 @@ def play_music():
   
 
 def choice(option):
-  global time_start, check, text, player_choice_text, machine_choice_text
+  global time_start, check, text
   
-  set_character_state('wait');
+  set_character_state('wait')
 
   check = player_choice(option)
   text = Text(check[0], (255,255,255), 6,300)
@@ -87,12 +87,6 @@ def choice(option):
     enemy_character.current_lifes -= 1      
   elif check[0] == "Você perdeu!":
     player_character.current_lifes -= 1  
-
-  if player_character.current_lifes == 0:
-    end_round(0,1)
-  if enemy_character.current_lifes == 0:
-    end_round(1)
-
 def countdown_tick(time_elapsed):
   global time_decorrido_text, time_decorrido
   time_decorrido = timer_limit - time_elapsed / 1000
@@ -122,7 +116,10 @@ def draw_result():
   player_character.draw(True)
   enemy_character.draw(True)
   text.draw()
-  # time.sleep(2)
+  pygame.display.update()
+  time.sleep(2)
+  set_character_state('main')
+    
 
 #screen_funcs
 def update_screen(time_start):
@@ -135,23 +132,27 @@ def update_screen(time_start):
     
 def draw_screen():
   if time_decorrido <= timer_limit-1:
-    if time_decorrido <= 30:
-      time_decorrido_text.draw()
-    button_pedra.draw()
-    button_papel.draw()
-    button_tesoura.draw()
-    
-    current_player_animation = player_character.animate(get_character_state())
-    current_enemy_animation  = enemy_character.animate(get_character_state())
+    if get_character_state() == 'main':
+      current_player_animation = player_character.animate()
+      current_enemy_animation  = enemy_character.animate()
+      if time_decorrido <= 30:
+        time_decorrido_text.draw()
+      button_pedra.draw()
+      button_papel.draw()
+      button_tesoura.draw()
+      pause.draw()
+    elif get_character_state() == 'wait':
+      current_player_animation = player_character.animate(current=get_character_state(),lifes =False)
+      current_enemy_animation  = enemy_character.animate(current=get_character_state(),lifes = False)
+      if current_player_animation == 'main':
+        set_character_state('play')
+    elif character_state ==  'play':
+      draw_result()
+      if player_character.current_lifes == 0:
+        end_round(0,1)
+      if enemy_character.current_lifes == 0:
+        end_round(1)
 
-    print(current_player_animation)
-
-    if get_character_state() == 'wait' and current_player_animation != 'wait':
-      print('entrou')
-      set_character_state('main')
-      # draw_result()
-
-    pause.draw()
     return
   return
 

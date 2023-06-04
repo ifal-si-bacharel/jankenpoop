@@ -1,20 +1,28 @@
+from src.common.components.button import Button
 from src.common.components.text import Text
+from src.config.window import screen_height, screen_width
 import src.common.screen_display as screen
 import pygame
+import time
 def update_screen(result):
-    global menssage, menssage_return
-    menssage_return = Text("Barra de Espaço, para voltar ao menu principal", (255, 255, 255), 6, 240)
+    global rscreen,return_text
+    ytemplate = screen_height()/2
+    
     if result == 1:
-        menssage = Text("VOCÊ VENCEU!!!", (0, 255, 0), 6, 200)
+        rscreen = Button(6,ytemplate,img='assets/sprites/resultscreens/victory.png',width=screen_width(),height=screen_height())
+        
     elif result == -1:
-        menssage = Text("VOCÊ PERDEU!!!", (255, 0, 0), 6, 200)
+        rscreen = Button(6,ytemplate,img='assets/sprites/resultscreens/defeat.png',width=screen_width(),height=screen_height())
+        
     else:
-        menssage = Text("ACABOU O TEMPO!!! XD", (0, 255, 255), 6, 200)
+        rscreen = Button(6,ytemplate,img='assets/sprites/resultscreens/timeout.png',width=screen_width(),height=screen_height())
+       
 
-    keys = pygame.key.get_pressed() 
-    if keys[pygame.K_SPACE]:
-        screen.switch_screen('menu')
+    
+        
 
 def draw_screen():
-    menssage.draw()
-    menssage_return.draw()
+    rscreen.draw()
+    pygame.display.update()
+    time.sleep(4)
+    screen.switch_screen('menu')
