@@ -27,8 +27,6 @@ button_papel = Button(6,ytemplate,img='assets/sprites/buttons/paper.png')
 button_tesoura = Button(9,ytemplate,img='assets/sprites/buttons/siccssors.png')
 pause = Button(1,40,img='assets/sprites/buttons/pause.png',width=50,height=50)
 
-character_state = 'main'
-
 #set_outputs
 text = Text('', (255,255,255), 6,300)
 check = ['','']
@@ -36,13 +34,21 @@ check = ['','']
 #set_music
 musicmatch_played = False  # para controlar a reprodução da música
 
+def set_character_state(state):
+  global character_state
+  character_state = state
+
+def get_character_state():
+  global character_state
+  return character_state 
+
 def create_characters():
   global player_character, enemy_character
+  set_character_state('main')
   player_character = Character(3,
                              5,
-                             animations={'blink':['assets/sprites/enemy/blink',0],
-                                          'main':['assets/sprites/enemy/main',2],
-                                          'wait':['assets/sprites/enemy/wait',3]},
+                             animations={'main':['assets/sprites/player/main',2],
+                                          'wait':['assets/sprites/player/wait',3]},
                              width=200,
                              height=200,
                              name='VOCÊ',
@@ -61,7 +67,6 @@ def create_characters():
 create_characters()
 
 
-
 def play_music():
   global musicmatch_played
   if not musicmatch_played:
@@ -71,8 +76,10 @@ def play_music():
   
 
 def choice(option):
-  global time_start, check, text, player_choice_text, machine_choice_text, character_state
+  global time_start, check, text, player_choice_text, machine_choice_text
   
+  set_character_state('wait');
+
   check = player_choice(option)
   text = Text(check[0], (255,255,255), 6,300)
 
@@ -81,25 +88,6 @@ def choice(option):
   elif check[0] == "Você perdeu!":
     player_character.current_lifes -= 1  
   
-  display.fill((0,0,0))
-  player_character.draw(True)
-
-  character_state = 'wait';
-
-  pygame.display.update()
-  
-  display.fill((0,0,0))
-  player_character.img = f'assets/sprites/player/{check[1][0]}'
-  enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
-  player_character.draw(False)
-  enemy_character.draw(False)
-  text.draw()
-  pygame.display.update()
-  time.sleep(2)
-
-  player_character.img = f'assets/sprites/player/main.png'
-  enemy_character.img = f'assets/sprites/enemy/main.png'
-
   if player_character.current_lifes == 0:
     end_round(0,1)
   if enemy_character.current_lifes == 0:
@@ -140,15 +128,24 @@ def update_screen(time_start):
     
   
 def draw_screen():
-  
   if time_decorrido <= timer_limit-1:
     if time_decorrido <= 30:
       time_decorrido_text.draw()
     button_pedra.draw()
     button_papel.draw()
     button_tesoura.draw()
-    player_character.draw()
-    enemy_character.animate(character_state)
+    # player_character.draw()
+    enemy_character.animate(get_character_state())
+    print(get_character_state())
+    if get_character_state() == 'wait':
+      time.sleep(2)
+
+
+    # player_character.img = f'assets/sprites/player/{check[1][0]}'
+    # enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
+    # # player_character.draw()
+    # enemy_character.draw()
+    # text.draw()
 
     pause.draw()
     return
