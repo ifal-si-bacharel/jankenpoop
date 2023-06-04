@@ -35,7 +35,7 @@ class Animation():
         if self.current_repeat == self.repeat:
           self.current_repeat = 0
           self.frame = 0
-          return next_animation if next_animation else self.name
+          return next_animation if next_animation else 'over'
         self.frame = 0
         self.current_repeat += 1
         return self.name

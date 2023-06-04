@@ -129,7 +129,6 @@ def update_screen(time_start):
     
   
 def draw_screen():
-  
   if time_decorrido <= timer_limit-1:
     if time_decorrido <= 30:
       time_decorrido_text.draw()
