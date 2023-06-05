@@ -26,7 +26,7 @@ ytext = (screen_height()/12) * 9
 yhalf = (screen_height()/12) * 5
 
 rscreen = Button(6,yhalf,img='assets/sprites/background/background.jpg',width=screen_width(),height=screen_height())
-rground = Button(6,ytemplate,img='assets/sprites/background/chao.png',width=screen_width(),height=350)
+rground = Button(6,ytemplate,img='assets/sprites/background/chao.png',width=screen_width(),height=255)
 #timer
 clock = pygame.time.Clock()
 
@@ -61,7 +61,7 @@ def create_characters():
                              width=200,
                              height=200,
                              name='VOCÊ',
-                             color=(0,0,255))
+                             color=(0,194,254))
   enemy_character = Character(9,
                               7,
                               animations={'blink':['assets/sprites/enemy/blink',0],
