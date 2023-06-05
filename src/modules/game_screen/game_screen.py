@@ -17,7 +17,16 @@ timer_limit = int(config['GAMEPARAMS']['Timer'])
 display = window()
 xtemplate = screen_width()
 ytemplate = (screen_height()/12) * 10
+ytext = (screen_height()/12) * 9
 
+
+
+
+#background
+yhalf = (screen_height()/12) * 5
+
+rscreen = Button(6,yhalf,img='assets/sprites/background/background.jpg',width=screen_width(),height=screen_height())
+rground = Button(6,ytemplate,img='assets/sprites/background/chao.png',width=screen_width(),height=350)
 #timer
 clock = pygame.time.Clock()
 
@@ -28,7 +37,7 @@ button_tesoura = Button(9,ytemplate,img='assets/sprites/buttons/siccssors.png')
 pause = Button(1,40,img='assets/sprites/buttons/pause.png',width=50,height=50)
 
 #set_outputs
-text = Text('', (255,255,255), 6,300)
+text = Text('', (255,255,255), 6,ytext)
 check = ['','']
 
 #set_music
@@ -46,7 +55,7 @@ def create_characters():
   global player_character, enemy_character
   set_character_state('main')
   player_character = Character(3,
-                             5,
+                             7,
                              animations={'main':['assets/sprites/player/main',2],
                                           'wait':['assets/sprites/player/wait',3]},
                              width=200,
@@ -54,7 +63,7 @@ def create_characters():
                              name='VOCÊ',
                              color=(0,0,255))
   enemy_character = Character(9,
-                              5,
+                              7,
                               animations={'blink':['assets/sprites/enemy/blink',0],
                                           'main':['assets/sprites/enemy/main',2],
                                           'wait':['assets/sprites/enemy/wait',3]},
@@ -81,16 +90,17 @@ def choice(option):
   set_character_state('wait')
 
   check = player_choice(option)
-  text = Text(check[0], (255,255,255), 6,300)
+  text = Text(check[0], (255,255,255), 6,ytext)
 
   if check[0] == "Você ganhou!":
     enemy_character.current_lifes -= 1      
   elif check[0] == "Você perdeu!":
     player_character.current_lifes -= 1  
+
 def countdown_tick(time_elapsed):
   global time_decorrido_text, time_decorrido
   time_decorrido = timer_limit - time_elapsed / 1000
-  time_decorrido_text = Text(f'{time_decorrido:2.0f}', (255, 255, 255), 6,3)
+  time_decorrido_text = Text(f'{time_decorrido:2.0f}', (255,255,255), 6,25,60)
   if time_decorrido <= 0:
     end_round(0,0)
 
@@ -101,7 +111,7 @@ def end_round(result, type=0):
   pygame.mixer.music.stop()
   create_characters()
 
-  text = Text('', (255,255,255), 6,200)
+  text = Text('', (255,255,255), 6,ytext)
   if result == 0:
     if type == 0:
       screen.switch_screen('timeout')
@@ -132,9 +142,11 @@ def update_screen(time_start):
     
 def draw_screen():
   if time_decorrido <= timer_limit-1:
+    rscreen.draw()
+    rground.draw()
     if get_character_state() == 'main':
       current_player_animation = player_character.animate()
-      current_enemy_animation  = enemy_character.animate()
+      enemy_character.animate()
       if time_decorrido <= 30:
         time_decorrido_text.draw()
       button_pedra.draw()
@@ -143,14 +155,14 @@ def draw_screen():
       pause.draw()
     elif get_character_state() == 'wait':
       current_player_animation = player_character.animate(current=get_character_state(),lifes =False)
-      current_enemy_animation  = enemy_character.animate(current=get_character_state(),lifes = False)
+      enemy_character.animate(current=get_character_state(),lifes = False)
       if current_player_animation == 'main':
         set_character_state('play')
     elif character_state ==  'play':
       draw_result()
-      if player_character.current_lifes == 0:
+      if player_character.current_lifes <= 0:
         end_round(0,1)
-      if enemy_character.current_lifes == 0:
+      if enemy_character.current_lifes <= 0:
         end_round(1)
 
     return

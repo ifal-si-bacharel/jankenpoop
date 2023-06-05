@@ -1,9 +1,10 @@
 import pygame
+from src.config.window import screen_height, screen_width
 import src.common.screen_display as screen
-from src.common.components.text import Text
+from src.common.components.button import Button
 
-welcome_text = Text("Bem-vindo ao jogo Jankenpoop!", (255, 255, 198), 6, 190)
-press_start = Text("Pressione Enter para iniciar", (255, 255, 198), 6, 220)
+ytemplate = screen_height()/2
+bgscreen = Button(6,ytemplate,img='assets/sprites/MenuAnimado.gif',width=screen_width(),height=screen_height())
 
 play_music = False
 def update_screen():
@@ -20,5 +21,4 @@ def update_screen():
     screen.switch_screen('match')
 
 def draw_screen():
-    welcome_text.draw()
-    press_start.draw()
+    bgscreen.draw()
