@@ -5,10 +5,10 @@ class Text():
 
   display = window()
     
-  def __init__(self, text, color, coordx, coordy):
+  def __init__(self, text, color, coordx, coordy, size = 30):
     pg.init()
 
-    self.font = pg.font.SysFont('Calibri', 25)
+    self.font = pg.font.SysFont('sans-serif', size)
     self.coordx = coordx
     self.coordy = coordy
     self.text = text
