@@ -39,7 +39,7 @@ pause = Button(1,40,img='assets/sprites/buttons/pause.png',width=50,height=50)
 #set_outputs
 text = Text('', (255,255,255), 6,ytext)
 check = ['','']
-
+click_stack = 0
 #set_music
 musicmatch_played = False  # para controlar a reprodução da música
 
@@ -55,7 +55,7 @@ def create_characters():
   global player_character, enemy_character
   set_character_state('main')
   player_character = Character(3,
-                             7,
+                             7.1,
                              animations={'main':['assets/sprites/player/main',2],
                                           'wait':['assets/sprites/player/wait',3]},
                              width=200,
@@ -63,7 +63,7 @@ def create_characters():
                              name='VOCÊ',
                              color=(0,194,254))
   enemy_character = Character(9,
-                              7,
+                              7.1,
                               animations={'blink':['assets/sprites/enemy/blink',0],
                                           'main':['assets/sprites/enemy/main',2],
                                           'wait':['assets/sprites/enemy/wait',3]},
@@ -75,7 +75,6 @@ def create_characters():
 #characters
 create_characters()
 
-
 def play_music():
   global musicmatch_played
   if not musicmatch_played:
@@ -85,17 +84,23 @@ def play_music():
   
 
 def choice(option):
-  global time_start, check, text
-  
-  set_character_state('wait')
+  global time_start, check, text, click_stack
 
-  check = player_choice(option)
-  text = Text(check[0], (255,255,255), 6,ytext)
+  if click_stack == 0:
+    set_character_state('wait')
 
-  if check[0] == "Você ganhou!":
-    enemy_character.current_lifes -= 1      
-  elif check[0] == "Você perdeu!":
-    player_character.current_lifes -= 1  
+    check = player_choice(option)
+    text = Text(check[0], (255,255,255), 6,ytext)
+
+    print(enemy_character.current_lifes)
+    print(player_character.current_lifes)
+
+    if check[0] == "Você ganhou!":
+      enemy_character.takedDamage()    
+    elif check[0] == "Você perdeu!":
+      player_character.takedDamage()
+    
+  click_stack += 1
 
 def countdown_tick(time_elapsed):
   global time_decorrido_text, time_decorrido
@@ -121,6 +126,8 @@ def end_round(result, type=0):
     screen.switch_screen('win')
 
 def draw_result():
+  global click_stack
+
   player_character.img = f'assets/sprites/player/{check[1][0]}'
   enemy_character.img = f'assets/sprites/enemy/{check[1][1]}'
   player_character.draw(True)
@@ -128,6 +135,8 @@ def draw_result():
   text.draw()
   pygame.display.update()
   time.sleep(2)
+  click_stack = 0
+
   set_character_state('main')
     
 
@@ -166,6 +175,7 @@ def draw_screen():
         end_round(1)
 
     return
+  
   return
 
 

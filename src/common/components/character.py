@@ -36,6 +36,8 @@ class Character():
                                                                    
     return list_animations
 
+  def takedDamage(self, damage = 1):
+    self.current_lifes = self.current_lifes - damage
   
   def animate(self,lifes=True, next_animation='', current=''):
     if lifes:

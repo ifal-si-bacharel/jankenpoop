@@ -12,7 +12,6 @@ last_mark = 0
 
 def switch_screen(screen):
   global current_screen, last_mark, timer_stack
-  print(screen)
   current_screen = screen
   if screen == 'pause':
     timer_stack += clock_tick()
