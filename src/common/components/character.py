@@ -25,14 +25,15 @@ class Character():
   def load_animations(self, dictionary):
     list_animations = {}
     for name, dir in dictionary.items(): 
-      list_animations[name] = Animation(dir[0],
-                                  self.coordx,
-                                  self.coordy,
-                                  dir[1],
-                                  name,
-                                  self.width,
-                                  self.height
+      list_animations[name] = Animation(dir=dir[0],
+                                        coordx=self.coordx,
+                                        coordy=self.coordy,
+                                        height=self.height,
+                                        width=self.width,
+                                        name=name,
+                                        repeat=dir[1],
                                   )
+                                                                   
     return list_animations
 
   

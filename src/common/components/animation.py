@@ -3,7 +3,8 @@ from src.config.window import window
 import os
 
 class Animation():
-  def __init__(self,dir,coordx,coordy,repeat,name,width = 100,height = 100,):
+  def __init__(self,dir,coordx,coordy,repeat,name,loop=False,width = 100,height = 100,type_image='png'):
+    self.type_image = type_image
     self.display = window()
     self.coordy = coordy
     self.coordx = coordx
@@ -14,6 +15,7 @@ class Animation():
     self.dir = dir
     self.frame = 0
     self.repeat = repeat 
+    self.loop = loop
     self.current_repeat = 0
     self.total_frames = self.set_total_frames()
 
@@ -26,12 +28,15 @@ class Animation():
     return stack
 
   def play(self,next_animation= ''):
-    animation = pg.image.load(f'{self.dir}/{self.frame}.png')
-    animation_on_screen = pg.transform.scale(animation, (200, 200))
+    animation = pg.image.load(f'{self.dir}/{self.frame}.{self.type_image}')
+    animation_on_screen = pg.transform.scale(animation, (self.width, self.height))
     self.display.blit(animation_on_screen, (self.coordx, self.coordy))
     
     if self.frame == self.total_frames-1:
-      if self.repeat:
+      if self.loop:
+        self.frame = 0
+        return self.name
+      elif self.repeat:
         if self.current_repeat == self.repeat:
           self.current_repeat = 0
           self.frame = 0
